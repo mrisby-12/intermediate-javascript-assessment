@@ -43,7 +43,14 @@ function noWeakLink() {
     method: 'GET',
     url: '/api/users'
   })
-  // CODE HERE...
+  .then(res => {
+    firstUser = res.data[0];
+    return res;
+  })
+  .then(res => {
+    thirdUser = res.data[2];
+    return res.data[9];
+  });
 
 }
 
@@ -74,7 +81,7 @@ function large() {
   return 'My name is ' + this.name + ' and I am very heavy!'
 }
 // CODE HERE...
-
+let boundToElephant = large.bind(elephant);
 
 
 // *************
@@ -88,7 +95,9 @@ function large() {
 // and return the bound function.
 
 // CODE HERE...
-
+const deathStar = (capacity, crew) => {
+  return capacity.bind(crew)
+}
 
 
 // *************
@@ -103,7 +112,11 @@ function large() {
 // The closure function will return the combined value of assets and liabilities.
 
 // CODE HERE...
-
+const accountingOffice = (assets) => {
+  return function(liabilities) {
+    return assets + liabilities
+  }
+}
 
 
 // *************
@@ -128,7 +141,13 @@ function large() {
 // };
 
 // CODE HERE...
-
+const forgetter = (name) => {
+  let remember = [];
+  return rememberall = (item) => {
+    remember.push(item)
+    return { name: name, remember:remember }
+  }
+}
 
 
 // *************
@@ -156,3 +175,36 @@ function large() {
 // NOTE: Neither hunger nor danger should be able to exceed 100 or drop below 0.
 
 // CODE HERE...
+const frodo = (startingHungerValue, startingDangerValue) => {
+  let hunger = startingHungerValue;
+  let danger = startingDangerValue;
+  return {
+    dinnerOverFire: function() {
+      if (hunger - 25 < 0) {
+        hunger = 0
+      } else {
+        hunger -= 25
+      }
+      if (danger + 40 > 100) {
+        danger = 100
+      } else {
+        danger += 40
+      }
+      return { hunger: hunger, danger: danger }
+    },
+    hidingInBush: function() {
+      if (hunger + 35 > 100) {
+        hunger = 100
+      } else {
+        hunger += 35
+      }
+      if (danger - 20 < 0) {
+        danger = 0
+      } else {
+        danger -= 20
+      }
+      return { hunger: hunger, danger: danger }
+    }
+  }
+}
+
